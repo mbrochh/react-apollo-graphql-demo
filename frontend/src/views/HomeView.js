@@ -1,7 +1,34 @@
 import React from 'react'
+import { gql, graphql } from 'react-apollo'
 
-export default class HomeView extends React.Component {
+const query = gql`{
+  allMessages {
+    edges {
+      node {
+        id
+        message
+      }
+    }
+  }
+}`
+
+class HomeView extends React.Component {
   render() {
-    return <div>Home</div>
+    let { data } = this.props
+    if (data.loading) {
+      return <div>Loading...</div>
+    }
+    console.log(data)
+    return (
+      <div>
+        {data.allMessages.edges.map((item, index) => (
+          <p key={item.node.id}>{item.node.message}</p>
+        ))}
+      </div>
+    )
   }
 }
+
+HomeView = graphql(query)(HomeView)
+
+export default HomeView

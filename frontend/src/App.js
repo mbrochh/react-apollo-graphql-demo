@@ -10,11 +10,9 @@ import CreateView from './views/CreateView'
 import DetailView from './views/DetailView'
 
 const networkInterface = createBatchingNetworkInterface({
-  uri: 'http://0.0.0.0:8000/graphql/',
+  uri: 'http://0.0.0.0:8000/gql/',
   batchInterval: 10,
-  opts: {
-    credentials: 'include',
-  },
+  opts: {},
 })
 
 const client = new ApolloClient({
