@@ -1,21 +1,42 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import {
+  ApolloClient,
+  ApolloProvider,
+  createBatchingNetworkInterface,
+} from 'react-apollo'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import HomeView from './views/HomeView'
+import CreateView from './views/CreateView'
+import DetailView from './views/DetailView'
+
+const networkInterface = createBatchingNetworkInterface({
+  uri: 'http://0.0.0.0:8000/graphql/',
+  batchInterval: 10,
+  opts: {
+    credentials: 'include',
+  },
+})
+
+const client = new ApolloClient({
+  networkInterface: networkInterface,
+})
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      <ApolloProvider client={client}>
+        <Router>
+          <div>
+            <Route exact path="/" component={HomeView} />
+            <Switch>
+              <Route exact path="/messages/create/" component={CreateView} />
+              <Route exact path="/messages/:id/" component={DetailView} />
+            </Switch>
+          </div>
+        </Router>
+      </ApolloProvider>
+    )
   }
 }
 
-export default App;
+export default App
