@@ -19,7 +19,11 @@ class CreateView extends React.Component {
     this.props
       .mutate({ variables: { message: formData.get('message') } })
       .then(res => {
-        window.location.replace(`/`)
+        if (res.data.createMessage.formErrors === null) {
+          window.location.replace(`/`)
+        } else {
+          console.log(res.data.createMessage.formErrors)
+        }
       })
       .catch(err => {
         console.log('Network error!')
