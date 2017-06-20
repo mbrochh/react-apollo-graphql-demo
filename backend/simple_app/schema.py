@@ -35,5 +35,12 @@ class Mutation(graphene.AbstractType):
 class Query(graphene.AbstractType):
     all_messages = DjangoFilterConnectionField(MessageType)
 
+    message = graphene.Field(MessageType, id=graphene.ID())
+
     def resolve_all_messages(self, args, context, info):
         return models.Message.objects.all()
+
+    def resolve_message(self, args, context, info):
+        from graphql_relay.node.node import from_global_id
+        pk = from_global_id(args.get('id'))[1]
+        return models.Message.objects.get(pk=pk)
