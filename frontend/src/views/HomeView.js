@@ -18,11 +18,14 @@ class HomeView extends React.Component {
     if (data.loading) {
       return <div>Loading...</div>
     }
-    console.log(data)
     return (
       <div>
         {data.allMessages.edges.map((item, index) => (
-          <p key={item.node.id}>{item.node.message}</p>
+          <p key={item.node.id}>
+            <a href={`/messages/${item.node.id}/`}>
+              {item.node.message}
+            </a>
+          </p>
         ))}
       </div>
     )
