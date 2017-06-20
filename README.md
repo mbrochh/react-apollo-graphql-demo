@@ -10,7 +10,7 @@ a virtualenv in Python and install Django:
 
 ```bash
 cd ~/Projects/
-git clone ...
+git clone https://github.com/mbrochh/react-apollo-graphql-demo.git
 cd react-apollo-graphql-demo/backend
 mkvirtualenv react-apollo-graphql-demo
 pip install -r requirements.txt
