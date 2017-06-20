@@ -21,8 +21,9 @@ class CreateMessage(graphene.Mutation):
 
     @staticmethod
     def mutate(root, args, context, info):
-        if not context.user.is_authenticated():
-            return CreateMessage(form_errors=json.dumps('Please login!'))
+        if not args.get('message').strip():
+            return CreateMessage(
+                form_errors=json.dumps('Please enter a message!'))
         message = models.Message.objects.create(
             user=context.user, message=args.get('message'))
         return CreateMessage(message=message, form_errors=None)

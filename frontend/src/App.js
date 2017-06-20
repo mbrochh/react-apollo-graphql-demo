@@ -12,7 +12,9 @@ import DetailView from './views/DetailView'
 const networkInterface = createBatchingNetworkInterface({
   uri: 'http://0.0.0.0:8000/gql/',
   batchInterval: 10,
-  opts: {},
+  opts: {
+    credentials: 'same-origin',
+  },
 })
 
 const client = new ApolloClient({
