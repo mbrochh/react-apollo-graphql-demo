@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { gql, graphql } from 'react-apollo'
 
 const query = gql`{
@@ -22,9 +23,9 @@ class HomeView extends React.Component {
       <div>
         {data.allMessages.edges.map((item, index) => (
           <p key={item.node.id}>
-            <a href={`/messages/${item.node.id}/`}>
+            <Link to={`/messages/${item.node.id}/`}>
               {item.node.message}
-            </a>
+            </Link>
           </p>
         ))}
       </div>
